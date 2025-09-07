@@ -4,18 +4,18 @@ const ot = "0.6.1", st = {
   version: ot
 };
 function at(t) {
-  const { width: i, height: n } = t.parentElement.getBoundingClientRect(), s = { width: 300, height: 100 }, a = String(c(t, g.SHOW_LAST_VALUE, "false")) === "true", e = tt(t), m = e && e.length ? e.at(-1) : null;
+  const { width: i, height: n } = t.parentElement.getBoundingClientRect(), s = { width: 300, height: 100 }, a = String(c(t, g.SHOW_LAST_VALUE, "false")) === "true", e = tt(t), f = e && e.length ? e.at(-1) : null;
   let r = 0;
-  if (!(t.dataset.type && t.dataset.type === "bar") && a && ![null, void 0].includes(m)) {
-    const b = Number(String(c(t, g.NUMBER_ROUNDING, 0)));
-    r = 6 + m.toFixed(b).length * (Number(c(t, g.LAST_VALUE_FONT_SIZE, 12)) / 2);
+  if (!(t.dataset.type && t.dataset.type === "bar") && a && ![null, void 0].includes(f)) {
+    const O = Number(String(c(t, g.NUMBER_ROUNDING, 0)));
+    r = 6 + f.toFixed(O).length * (Number(c(t, g.LAST_VALUE_FONT_SIZE, 12)) / 2);
   }
-  const x = `0 0 ${(i || s.width) + r} ${n || s.height}`, N = document.createElementNS(A, "svg"), S = t.dataset.id;
-  N.id = S, N.setAttribute("viewBox", x), N.style.width = "100%", N.style.height = "100%";
+  const x = `0 0 ${(i || s.width) + r} ${n || s.height}`, N = document.createElementNS(A, "svg"), b = t.dataset.id;
+  N.id = b, N.setAttribute("viewBox", x), N.style.width = "100%", N.style.height = "100%";
   const I = document.createElementNS(A, "desc");
   return I.setAttribute("aria-hidden", "true"), I.innerHTML = `Composed with tiny-spark v${st.version}`, N.appendChild(I), {
     svg: N,
-    svgId: S,
+    svgId: b,
     width: i || s.width,
     height: n || s.height,
     viewBox: x
@@ -32,20 +32,20 @@ function K(t) {
 }
 function Z(t) {
   if (t.length < 1) return "0,0";
-  const i = t.length - 1, n = [`${_(t[0].x)},${_(t[0].y)}`], s = [], a = [], e = [], m = [];
+  const i = t.length - 1, n = [`${_(t[0].x)},${_(t[0].y)}`], s = [], a = [], e = [], f = [];
   for (let r = 0; r < i; r += 1)
     s[r] = t[r + 1].x - t[r].x, a[r] = t[r + 1].y - t[r].y, e[r] = a[r] / s[r];
-  m[0] = e[0], m[i] = e[i - 1];
+  f[0] = e[0], f[i] = e[i - 1];
   for (let r = 1; r < i; r += 1)
     if (e[r - 1] * e[r] <= 0)
-      m[r] = 0;
+      f[r] = 0;
     else {
-      const O = 2 * e[r - 1] * e[r] / (e[r - 1] + e[r]);
-      m[r] = O;
+      const S = 2 * e[r - 1] * e[r] / (e[r - 1] + e[r]);
+      f[r] = S;
     }
   for (let r = 0; r < i; r += 1) {
-    const O = t[r].x, v = t[r].y, x = t[r + 1].x, N = t[r + 1].y, S = m[r], I = m[r + 1], b = O + (x - O) / 3, d = v + S * (x - O) / 3, L = x - (x - O) / 3, P = N - I * (x - O) / 3;
-    n.push(`C ${_(b)},${_(d)} ${_(L)},${_(P)} ${_(x)},${_(N)}`);
+    const S = t[r].x, v = t[r].y, x = t[r + 1].x, N = t[r + 1].y, b = f[r], I = f[r + 1], O = S + (x - S) / 3, l = v + b * (x - S) / 3, L = x - (x - S) / 3, P = N - I * (x - S) / 3;
+    n.push(`C ${_(O)},${_(l)} ${_(L)},${_(P)} ${_(x)},${_(N)}`);
   }
   return n.join(" ");
 }
@@ -58,12 +58,12 @@ function lt(t, i = 1e3, n) {
 }
 function dt(t, i, n = 1e3) {
   i.style.opacity = "1";
-  const s = i.getBBox(), a = s.width, e = document.createElementNS("http://www.w3.org/2000/svg", "clipPath"), m = "clip-" + Math.random().toString(36).substr(2, 9);
-  e.setAttribute("id", m);
+  const s = i.getBBox(), a = s.width, e = document.createElementNS("http://www.w3.org/2000/svg", "clipPath"), f = "clip-" + Math.random().toString(36).substr(2, 9);
+  e.setAttribute("id", f);
   const r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
   r.setAttribute("x", s.x.toString()), r.setAttribute("y", s.y.toString()), r.setAttribute("width", "0"), r.setAttribute("height", s.height.toString()), e.appendChild(r);
-  let O = t.querySelector("defs");
-  O || (O = document.createElementNS("http://www.w3.org/2000/svg", "defs"), t.insertBefore(O, t.firstChild)), O.appendChild(e), i.setAttribute("clip-path", `url(#${m})`), r.style.transition = `width ${n}ms ease-out`, r.getBoundingClientRect(), r.setAttribute("width", a.toString()), r.addEventListener("transitionend", function v() {
+  let S = t.querySelector("defs");
+  S || (S = document.createElementNS("http://www.w3.org/2000/svg", "defs"), t.insertBefore(S, t.firstChild)), S.appendChild(e), i.setAttribute("clip-path", `url(#${f})`), r.style.transition = `width ${n}ms ease-out`, r.getBoundingClientRect(), r.setAttribute("width", a.toString()), r.addEventListener("transitionend", function v() {
     i.removeAttribute("clip-path"), e.parentNode && e.parentNode.removeChild(e), r.removeEventListener("transitionend", v);
   });
 }
@@ -145,20 +145,20 @@ function q(t, i, n, s, a) {
     e && (cancelAnimationFrame(e.frameId), e.frameId = null, e.tool.style.opacity = "0");
     return;
   }
-  const m = i.dataset.type === E.BAR, { x: r, y: O } = pt(
+  const f = i.dataset.type === E.BAR, { x: r, y: S } = pt(
     t,
     n.x,
-    m && !n.isPositive ? n.bar.y : n.y
+    f && !n.isPositive ? n.bar.y : n.y
   );
   if (!e) {
-    const b = document.createElement("div");
-    b.classList.add("tiny-spark-tooltip"), b.setAttribute("id", `tooltip_${s}`), b.setAttribute("role", "tooltip"), b.setAttribute("aria-live", "polite"), b.style.position = "fixed", b.style.pointerEvents = "none", b.style.opacity = "0", b.style.willChange = "top, left", document.body.appendChild(b), e = G[s] = {
+    const O = document.createElement("div");
+    O.classList.add("tiny-spark-tooltip"), O.setAttribute("id", `tooltip_${s}`), O.setAttribute("role", "tooltip"), O.setAttribute("aria-live", "polite"), O.style.position = "fixed", O.style.pointerEvents = "none", O.style.opacity = "0", O.style.willChange = "top, left", document.body.appendChild(O), e = G[s] = {
       targetX: 0,
       targetY: 0,
       displayX: 0,
       displayY: 0,
       frameId: null,
-      tool: b,
+      tool: O,
       width: 0,
       height: 0,
       hasSnapped: !1
@@ -172,13 +172,13 @@ function q(t, i, n, s, a) {
   const { width: v, height: x } = e.tool.getBoundingClientRect();
   e.width = v, e.height = x;
   const N = Number(c(i, g.PLOT_RADIUS, 3));
-  if (e.targetX = r - e.width / 2, e.targetY = O - e.height - N * 1.5, !e.hasSnapped) {
+  if (e.targetX = r - e.width / 2, e.targetY = S - e.height - N * 1.5, !e.hasSnapped) {
     e.displayX = e.targetX, e.displayY = e.targetY, e.tool.style.left = `${e.displayX}px`, e.tool.style.top = `${e.displayY}px`, e.tool.style.opacity = "1", e.hasSnapped = !0;
     return;
   }
-  const S = Number(c(i, g.TOOLTIP_SMOOTHING, 1)) / 10;
+  const b = Number(c(i, g.TOOLTIP_SMOOTHING, 1)) / 10;
   function I() {
-    e.displayX += (e.targetX - e.displayX) * S, e.displayY += (e.targetY - e.displayY) * S, e.tool.style.left = `${Math.round(e.displayX)}px`, e.tool.style.top = `${Math.round(e.displayY)}px`, e.tool.style.opacity = "1", e.frameId = requestAnimationFrame(I);
+    e.displayX += (e.targetX - e.displayX) * b, e.displayY += (e.targetY - e.displayY) * b, e.tool.style.left = `${Math.round(e.displayX)}px`, e.tool.style.top = `${Math.round(e.displayY)}px`, e.tool.style.opacity = "1", e.frameId = requestAnimationFrame(I);
   }
   e.frameId == null && I();
 }
@@ -189,70 +189,75 @@ function ht(t, i) {
   const n = t.dataset.type && t.dataset.type === "bar";
   let s = i;
   yt(t);
-  const { svg: a, svgId: e, width: m, height: r, viewBox: O } = at(t), { color: v, backgroundColor: x } = ut(t), N = Number(t.dataset.padding) || 12, S = { T: N, R: N, B: N, L: N }, I = T(), b = String(c(t, g.SHOW_LAST_VALUE, "false")) === "true", d = {
-    left: S.L,
-    top: S.T,
-    width: m - S.L - S.R,
-    height: r - S.T - S.B,
-    bottom: r - S.B
-  }, L = tt(t), { min: P } = j(L), k = L.map((o) => [null, void 0].includes(o) ? o : o + (P < 0 ? Math.abs(P) : 0)), { max: W } = j(k);
-  let C = d.width / (L.length - 1) === 1 / 0 ? d.width : d.width / (L.length - 1);
+  const { svg: a, svgId: e, width: f, height: r, viewBox: S } = at(t), { color: v, backgroundColor: x } = ut(t), N = Number(t.dataset.padding) || 12, b = { T: N, R: N, B: N, L: N };
+  console.log("padding = ", b);
+  const I = T(), O = String(c(t, g.SHOW_LAST_VALUE, "false")) === "true", l = {
+    left: b.L,
+    top: b.T,
+    width: f - b.L - b.R,
+    height: r - b.T - b.B,
+    bottom: r - b.B,
+    right: f - b.R
+  };
+  console.log("area = ", l);
+  const L = tt(t), { min: P } = j(L), k = L.map((o) => [null, void 0].includes(o) ? o : o + (P < 0 ? Math.abs(P) : 0)), { max: W } = j(k);
+  let C = l.width / (L.length - 1) === 1 / 0 ? l.width : l.width / (L.length - 1);
   if (n) {
-    const [o, f, p, l] = O.split(" ");
-    a.setAttribute("viewBox", `${Number(o) - C / 2} ${f} ${Number(p) + C} ${l}`);
+    const [o, m, p, d] = S.split(" ");
+    a.setAttribute("viewBox", `${Number(o) - C / 2} ${m} ${Number(p) + C} ${d}`);
   }
-  const M = !L.some((o) => o >= 0), it = gt(t), u = k.map((o, f) => {
+  const M = !L.some((o) => o >= 0), it = gt(t), u = k.map((o, m) => {
     const p = {
       w: k.length === 1 ? C / 2 : 0,
-      h: k.length === 1 ? d.height / 2 : 0
-    }, l = d.left + C * f + p.w, h = (1 - (o || 0) / W) * d.height + p.h + S.T, H = (1 - (P < 0 ? Math.abs(P) : 0) / W) * d.height + S.T + p.h, X = L[f] >= 0;
+      h: k.length === 1 ? l.height / 2 : 0
+    }, d = l.left + C * m + p.w, h = (1 - (o || 0) / W) * l.height + p.h + b.T, H = (1 - (P < 0 ? Math.abs(P) : 0) / W) * l.height + b.T + p.h, X = L[m] >= 0;
     return {
-      y: M && L.length === 1 ? d.top + d.height / 2 : h,
-      x: l,
-      v: L[f],
-      d: it[f] || null,
+      y: M && L.length === 1 ? l.top + l.height / 2 : h,
+      x: d,
+      v: L[m],
+      d: it[m] || null,
       isPositive: X,
       bar: {
-        x: l - C / 2,
-        y: L.length === 1 ? d.top : X ? h : M ? d.top : H,
-        h: L.length === 1 ? d.height : X ? H - h : M && L.length === 0 ? d.height : isNaN(h - H) ? 0 : h - H,
+        x: d - C / 2,
+        y: L.length === 1 ? l.top : X ? h : M ? l.top : H,
+        h: L.length === 1 ? l.height : X ? H - h : M && L.length === 0 ? l.height : isNaN(h - H) ? 0 : h - H,
         w: C
       }
     };
   }), $ = [...u].filter(({ v: o }) => ![null, void 0].includes(o)), z = t.getAttribute("data-animation"), w = document.createElementNS(A, "path");
   w.classList.add("tiny-spark-line-path");
   const R = document.createElementNS(A, "path");
-  R.classList.add("tiny-spark-line-area"), n || (!t.dataset.curve || t.dataset.curve === "true" ? w.setAttribute("d", `M ${Z($)}`) : w.setAttribute("d", `M ${K($)}`), w.setAttribute("fill", "none"), w.setAttribute("stroke", String(c(t, g.LINE_COLOR, v))), w.setAttribute("stroke-width", String(c(t, g.LINE_THICKNESS, 2))), w.setAttribute("stroke-linecap", "round"), z === "true" && s && (w.style.opacity = "0", R.style.opacity = "0"), u.length && (!t.dataset.curve || t.dataset.curve === "true" ? R.setAttribute("d", `M ${$[0].x},${d.bottom} ${Z($)} L ${$.at(-1).x},${d.bottom} Z`) : R.setAttribute("d", `M ${$[0].x},${d.bottom} ${K($)} L ${$.at(-1).x},${d.bottom} Z`)), R.setAttribute("fill", String(c(t, g.AREA_COLOR, "transparent"))), u.length > 1 && (a.appendChild(R), a.appendChild(w)));
+  R.classList.add("tiny-spark-line-area"), n || (!t.dataset.curve || t.dataset.curve === "true" ? w.setAttribute("d", `M ${Z($)}`) : w.setAttribute("d", `M ${K($)}`), w.setAttribute("fill", "none"), w.setAttribute("stroke", String(c(t, g.LINE_COLOR, v))), w.setAttribute("stroke-width", String(c(t, g.LINE_THICKNESS, 2))), w.setAttribute("stroke-linecap", "round"), z === "true" && s && (w.style.opacity = "0", R.style.opacity = "0"), u.length && (!t.dataset.curve || t.dataset.curve === "true" ? R.setAttribute("d", `M ${$[0].x},${l.bottom} ${Z($)} L ${$.at(-1).x},${l.bottom} Z`) : R.setAttribute("d", `M ${$[0].x},${l.bottom} ${K($)} L ${$.at(-1).x},${l.bottom} Z`)), R.setAttribute("fill", String(c(t, g.AREA_COLOR, "transparent"))), u.length > 1 && (a.appendChild(R), a.appendChild(w)));
   const F = [];
-  u.forEach((o, f) => {
+  u.forEach((o, m) => {
     const p = document.createElementNS(A, "line");
-    p.classList.add("tiny-spark-indicator"), p.setAttribute("id", `indicator_${e}_${f}`), p.setAttribute("x1", String(d.left + (u.length === 1 ? d.width / 2 : f * C))), p.setAttribute("x2", String(d.left + (u.length === 1 ? d.width / 2 : f * C))), p.setAttribute("y1", String(d.top)), p.setAttribute("y2", String(d.bottom)), p.setAttribute("stroke", String(c(t, g.INDICATOR_COLOR, "#1A1A1A"))), p.setAttribute("stroke-width", String(c(t, g.INDICATOR_WIDTH, "1"))), p.setAttribute("stroke-linecap", "round"), p.style.pointerEvents = "none", p.style.opacity = "0", F.push(p), a.appendChild(p);
+    p.classList.add("tiny-spark-indicator"), p.setAttribute("id", `indicator_${e}_${m}`), p.setAttribute("x1", String(l.left + (u.length === 1 ? l.width / 2 : m * C))), p.setAttribute("x2", String(l.left + (u.length === 1 ? l.width / 2 : m * C))), p.setAttribute("y1", String(l.top)), p.setAttribute("y2", String(l.bottom)), p.setAttribute("stroke", String(c(t, g.INDICATOR_COLOR, "#1A1A1A"))), p.setAttribute("stroke-width", String(c(t, g.INDICATOR_WIDTH, "1"))), p.setAttribute("stroke-linecap", "round"), p.style.pointerEvents = "none", p.style.opacity = "0", F.push(p), a.appendChild(p);
   });
   let V = [], U = [];
   const D = Number(String(c(t, g.PLOT_RADIUS, 0))) > 0, rt = !String(c(t, g.HIDE_PLOTS_ABOVE, "")) || u.length <= Number(String(c(t, g.HIDE_PLOTS_ABOVE, 0))), B = D && rt;
-  n && u.forEach(({ bar: o, v: f }, p) => {
-    if (![null, void 0].includes(f)) {
-      const l = document.createElementNS(A, "rect");
-      l.classList.add("tiny-spark-datapoint-bar"), l.setAttribute("x", String(o.x)), l.setAttribute("y", String(o.y)), l.setAttribute("width", String(o.w)), l.setAttribute("height", String(o.h)), l.setAttribute("fill", String(c(t, g.PLOT_COLOR, String(c(t, "lineColor", v))))), l.style.opacity = u.length === 1 ? "1" : "0", l.style.transition = `opacity ${p * (1e3 * 2 / u.length)}ms ease-in`, U.push(l), a.appendChild(l);
+  n && u.forEach(({ bar: o, v: m }, p) => {
+    if (![null, void 0].includes(m)) {
+      const d = document.createElementNS(A, "rect");
+      d.classList.add("tiny-spark-datapoint-bar"), d.setAttribute("x", String(o.x)), d.setAttribute("y", String(o.y)), d.setAttribute("width", String(o.w)), d.setAttribute("height", String(o.h)), d.setAttribute("fill", String(c(t, g.PLOT_COLOR, String(c(t, "lineColor", v))))), d.style.opacity = u.length === 1 ? "1" : "0", d.style.transition = `opacity ${p * (1e3 * 2 / u.length)}ms ease-in`, U.push(d), a.appendChild(d);
     }
-  }), D && !n && u.forEach(({ x: o, y: f, v: p }, l) => {
+  }), D && !n && u.forEach(({ x: o, y: m, v: p }, d) => {
     if (![null, void 0].includes(p)) {
       const h = document.createElementNS(A, "circle");
-      h.classList.add("tiny-spark-datapoint-circle"), h.classList.add(`circle-${e}`), h.setAttribute("id", `circle_${e}_${l}`), h.setAttribute("cx", String(o || 0)), h.setAttribute("cy", String(f || 0)), h.setAttribute("r", String(c(t, g.PLOT_RADIUS, 3))), h.setAttribute("fill", String(c(t, g.PLOT_COLOR, String(c(t, "lineColor", v))))), h.setAttribute("stroke", x), h.style.opacity = u.length === 1 ? "1" : "0", h.style.transition = `opacity ${l * (1e3 * 2 / u.length)}ms ease-in`, h.style.pointerEvents = "none", V.push(h), B && a.appendChild(h);
+      h.classList.add("tiny-spark-datapoint-circle"), h.classList.add(`circle-${e}`), h.setAttribute("id", `circle_${e}_${d}`), h.setAttribute("cx", String(o || 0)), h.setAttribute("cy", String(m || 0)), h.setAttribute("r", String(c(t, g.PLOT_RADIUS, 3))), h.setAttribute("fill", String(c(t, g.PLOT_COLOR, String(c(t, "lineColor", v))))), h.setAttribute("stroke", x), h.style.opacity = u.length === 1 ? "1" : "0", h.style.transition = `opacity ${d * (1e3 * 2 / u.length)}ms ease-in`, h.style.pointerEvents = "none", V.push(h), B && a.appendChild(h);
     }
   });
   let y = null;
-  if (b && u.length && u.at(-1)) {
+  if (O && u.length && u.at(-1)) {
     const o = Number(c(t, g.LAST_VALUE_FONT_SIZE, 12));
     y = document.createElementNS(A, "text"), y.classList.add("tiny-spark-last-value"), y.setAttribute("id", I), n ? (y.setAttribute("x", String(u.at(-1).x + Number(c(t, g.LINE_THICKNESS, 2)))), y.setAttribute("y", u.at(-1)?.isPositive ? String(u.at(-1).y - o / 3) : String(u.at(-1).bar.y + u.at(-1).bar.h + o)), y.setAttribute("text-anchor", "middle")) : (y.setAttribute("x", String(u.at(-1).x + 6 + Number(c(t, g.LINE_THICKNESS, 2)))), y.setAttribute("y", String(u.at(-1).y + o / 3)), y.setAttribute("text-anchor", "start")), y.setAttribute("font-size", String(o) + "px"), y.setAttribute("fill", String(c(t, g.LAST_VALUE_COLOR, String(c(t, g.INDICATOR_COLOR, "#1A1A1A"))))), y.innerHTML = nt(t, Number(u.at(-1).v)), y.style.opacity = u.length === 1 ? "1" : "0", a.appendChild(y);
   }
-  u.forEach((o, f) => {
-    const p = V[f], l = document.createElementNS(A, "rect");
-    l.classList.add("tiny-spark-tooltip-trap"), l.setAttribute("x", `${u.length === 1 ? 0 : d.left + f * C - C / 2}`), l.setAttribute("y", `${d.top}`), l.setAttribute("height", `${d.height}`), l.setAttribute("width", `${C}`), l.setAttribute("fill", "transparent"), l.setAttribute("aria-describedby", `tooltip_${e}`), l.addEventListener("mouseenter", () => {
-      q(a, t, o, e, !0), B ? document.getElementById(`circle_${e}_${f}`)?.setAttribute("r", String(Number(c(t, g.PLOT_RADIUS, 3)) * 1.5)) : a.appendChild(p), F[f].style.opacity = "1", b && y && (f === u.length - 1 ? y.style.opacity = "0" : y.style.opacity = "1");
-    }), l.addEventListener("mouseout", () => {
-      q(a, t, o, e, !1), B ? document.getElementById(`circle_${e}_${f}`)?.setAttribute("r", String(Number(c(t, g.PLOT_RADIUS, 3)))) : p.remove(), F.forEach((h) => h.style.opacity = "0"), b && y && (y.style.opacity = "1");
-    }), a.appendChild(l);
+  u.forEach((o, m) => {
+    const p = V[m], d = document.createElementNS(A, "rect");
+    d.classList.add("tiny-spark-tooltip-trap"), d.setAttribute("x", `${u.length === 1 ? 0 : l.left + m * C - C / 2}`), d.setAttribute("y", `${l.top}`), d.setAttribute("height", `${l.height}`), d.setAttribute("width", `${C}`), d.setAttribute("fill", "transparent"), d.setAttribute("aria-describedby", `tooltip_${e}`), d.addEventListener("mouseenter", () => {
+      q(a, t, o, e, !0), B ? document.getElementById(`circle_${e}_${m}`)?.setAttribute("r", String(Number(c(t, g.PLOT_RADIUS, 3)) * 1.5)) : a.appendChild(p), F[m].style.opacity = "1", O && y && (m === u.length - 1 ? y.style.opacity = "0" : y.style.opacity = "1");
+    }), d.addEventListener("mouseout", () => {
+      q(a, t, o, e, !1), B ? document.getElementById(`circle_${e}_${m}`)?.setAttribute("r", String(Number(c(t, g.PLOT_RADIUS, 3)))) : p.remove(), F.forEach((h) => h.style.opacity = "0"), O && y && (y.style.opacity = "1");
+    }), a.appendChild(d);
   }), z === "true" && s ? et().then(() => {
     V.forEach((o) => {
       o.style.opacity = "1";
@@ -283,8 +288,8 @@ function mt() {
         e.forEach(() => Y(n));
       });
       n.parentElement && s.observe(n.parentElement), new MutationObserver((e) => {
-        for (const m of e)
-          if (m.type === "attributes" && m.attributeName && Object.values(J).includes(m.attributeName)) {
+        for (const f of e)
+          if (f.type === "attributes" && f.attributeName && Object.values(J).includes(f.attributeName)) {
             Y(n);
             break;
           }

@@ -222,6 +222,7 @@ export function createChart(chart: TINY_SPARK, firstTime: boolean) {
 
   const pad = Number(chart.dataset.padding) || 12;
   const padding = { T: pad, R: pad, B: pad, L: pad };
+  console.log('padding = ', padding)
   const lastValueId = createUid();
   const showLastValue = String(getDatasetValue(chart, DATA_ATTRIBUTE.SHOW_LAST_VALUE, 'false')) === 'true';
 
@@ -234,6 +235,7 @@ export function createChart(chart: TINY_SPARK, firstTime: boolean) {
     bottom: height - padding.B,
     right: width - padding.R
   };
+  console.log('area = ', area)
 
   const dataset = parseDataset(chart);
   const { min: MIN } = minMax(dataset);
