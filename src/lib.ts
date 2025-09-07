@@ -220,6 +220,7 @@ export function createChart(chart: TINY_SPARK, firstTime: boolean) {
   const { svg, svgId, width, height, viewBox } = SVG(chart);
   const { color, backgroundColor } = getElementColors(chart);
 
+  console.log('dataset = ', chart.dataset)
   const pad = Number(chart.dataset.padding) || 12;
   const padding = { T: pad, R: pad, B: pad, L: pad };
   console.log('padding = ', padding)
