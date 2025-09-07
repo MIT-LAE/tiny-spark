@@ -220,7 +220,8 @@ export function createChart(chart: TINY_SPARK, firstTime: boolean) {
   const { svg, svgId, width, height, viewBox } = SVG(chart);
   const { color, backgroundColor } = getElementColors(chart);
 
-  const padding = { T: 12, R: 12, B: 12, L: 12 };
+  const pad = Number(chart.dataset.padding) || 12;
+  const padding = { T: pad, R: pad, B: pad, L: pad };
   const lastValueId = createUid();
   const showLastValue = String(getDatasetValue(chart, DATA_ATTRIBUTE.SHOW_LAST_VALUE, 'false')) === 'true';
 
