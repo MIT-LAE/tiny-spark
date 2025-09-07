@@ -191,7 +191,7 @@ function ht(t, i) {
   yt(t);
   const { svg: a, svgId: e, width: f, height: o, viewBox: S } = at(t), { color: v, backgroundColor: x } = ut(t);
   console.log("dataset = ", t.dataset);
-  const N = Number(t.dataset.padding) || 12, b = { T: N, R: N, B: N, L: N };
+  const N = Number(t.dataset.padding) ?? 12, b = { T: N, R: N, B: N, L: N };
   console.log("padding = ", b);
   const I = T(), O = String(c(t, g.SHOW_LAST_VALUE, "false")) === "true", l = {
     left: b.L,
